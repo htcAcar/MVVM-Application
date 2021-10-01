@@ -1,0 +1,9 @@
+C:\Users\USER\source\repos\StartApp\StartApp.DataAccess\bin\Debug\StartApp.DataAccess.dll
+C:\Users\USER\source\repos\StartApp\StartApp.DataAccess\bin\Debug\StartApp.DataAccess.pdb
+C:\Users\USER\source\repos\StartApp\StartApp.DataAccess\bin\Debug\StartApp.Entities.dll
+C:\Users\USER\source\repos\StartApp\StartApp.DataAccess\bin\Debug\StartApp.Entities.pdb
+C:\Users\USER\source\repos\StartApp\StartApp.DataAccess\obj\Debug\StartApp.DataAccess.csprojAssemblyReference.cache
+C:\Users\USER\source\repos\StartApp\StartApp.DataAccess\obj\Debug\StartApp.DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\USER\source\repos\StartApp\StartApp.DataAccess\obj\Debug\StartApp.DataAccess.csproj.CopyComplete
+C:\Users\USER\source\repos\StartApp\StartApp.DataAccess\obj\Debug\StartApp.DataAccess.dll
+C:\Users\USER\source\repos\StartApp\StartApp.DataAccess\obj\Debug\StartApp.DataAccess.pdb

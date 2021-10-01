@@ -1,0 +1,93 @@
+﻿<UserControl x:Class="StartApp.CategoryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:local="clr-namespace:StartApp"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" x:Name="categoryView" Background="#F2F2F2">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/ResourceDictionaries/Converters.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Margin="20" x:Name="mainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid Margin="5" Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>                
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+       
+            <DockPanel Grid.Row="0" VerticalAlignment="Bottom">
+                <Button  Margin="10" x:Name="btnRefresh" Height="20" Padding="0"  HorizontalAlignment="Left" Command="{Binding RefreshCommand}" Background="Transparent" BorderBrush="{x:Null}" Foreground="#585858">
+                    <TextBlock>
+                    <Run Text="&#xE72C;"
+                         FontFamily="Segoe MDL2 Assets" 
+                         FontWeight="DemiBold"
+                         FontSize="13"/>
+                    <Run Text="Refresh"
+                         FontSize="16"/>
+                    </TextBlock>
+                </Button>
+                <Button  Margin="10" x:Name="btnAdd"   Height="20" Padding="0" HorizontalAlignment="Left" Command="{Binding AddCommand}" CommandParameter="{Binding ElementName=categoryView}" Background="Transparent" BorderBrush="{x:Null}" Foreground="#585858">
+                    <TextBlock>
+                    <Run Text="&#xE109;"
+                         FontFamily="Segoe MDL2 Assets" 
+                         FontWeight="DemiBold"
+                         FontSize="13"/>
+                    <Run Text="Add"
+                         FontSize="16"/>
+                    </TextBlock>
+                </Button>
+                <Button  Margin="10" x:Name="btnEdit"  Height="20" Padding="0" HorizontalAlignment="Left" Command="{Binding EditCommand}"  CommandParameter="{Binding ElementName=CategoryListDataGrid, Path=SelectedItem}" Background="Transparent" BorderBrush="{x:Null}" Foreground="#585858" IsEnabled="{Binding ElementName=CategoryListDataGrid, Path=SelectedItems.Count, Converter={StaticResource IntToBoolConverter}, ConverterParameter=1}" >
+                    <TextBlock>
+                    <Run Text="&#xE70F;"
+                         FontFamily="Segoe MDL2 Assets" 
+                         FontWeight="DemiBold"
+                         FontSize="13"/>
+                    <Run Text="Edit"
+                         FontSize="16"/>
+                    </TextBlock>
+                </Button>
+
+                <Button  Margin="10" x:Name="btnDelete" Height="20" Padding="0" HorizontalAlignment="Left"  Command="{Binding DeleteCommand}" CommandParameter="{Binding ElementName=CategoryListDataGrid, Path=SelectedItems}" Background="Transparent" BorderBrush="{x:Null}" Foreground="#585858" IsEnabled="{Binding ElementName=CategoryListDataGrid,Path=SelectedItems.Count ,Converter={StaticResource GreaterThanConverter}, ConverterParameter=1}">
+                    <TextBlock>
+                    <Run Text="&#xE74D;"
+                         FontFamily="Segoe MDL2 Assets" 
+                         FontWeight="DemiBold"
+                         FontSize="13"/>
+                    <Run Text="Delete"
+                         FontSize="16"/>
+                    </TextBlock>
+                </Button>
+            </DockPanel>
+            <materialDesign:PackIcon  Grid.Row="0" Kind="Search" Foreground="#2E2E2E"  HorizontalAlignment="Right" Margin="0,15,155,10" Style="{StaticResource PackIconStyle}"/>
+            <TextBox Margin="5,5,5,9" Grid.Row="0" x:Name="txtSearch"  Width="150" HorizontalAlignment="Right" materialDesign:HintAssist.Hint="Search"  Foreground="#2E2E2E" FontSize="14" Style="{StaticResource TextBoxStyle}" Text="{Binding SearchText, Mode=TwoWay, Delay=300, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <DataGrid Margin="5" Grid.Row="1" x:Name="CategoryListDataGrid" ItemsSource="{Binding Categories ,Mode=TwoWay}" ScrollViewer.VerticalScrollBarVisibility="Visible" SelectionUnit="FullRow" SelectionMode="Extended" IsReadOnly="True"  ScrollViewer.CanContentScroll="True" AutomationProperties.AutomationId="PositionSummaryGrid" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDoubleClick">
+                        <i:InvokeCommandAction Command="{Binding Path=DoubleClickCommand}" CommandParameter="{Binding ElementName=CategoryListDataGrid, Path=SelectedItem}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <DataGrid.Columns >
+                    <DataGridTextColumn Header="Category Name" Width="Auto" Binding="{Binding CategoryName,Mode=TwoWay}"/>
+                    <DataGridTextColumn Header="Description" Width="Auto" Binding="{Binding Description,Mode=TwoWay}"/>                   
+                </DataGrid.Columns>
+            </DataGrid>
+            
+        </Grid>
+        <TextBlock Grid.Row="2" x:Name="tbFail" Text="Kayıt bulunamadı!.." Foreground="#B90504" Visibility="{Binding FailVisibility}"  Style="{StaticResource TextBlockStyle }"/>
+
+    </Grid>
+</UserControl>

@@ -1,0 +1,106 @@
+﻿<Window x:Class="StartApp.DetailWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"         
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:StartApp"
+        mc:Ignorable="d"
+        ResizeMode="CanResizeWithGrip"
+        Title="DetailWindow"  MinWidth="960" MinHeight="600" x:Name="detailWindow" Background="#F2F2F2">    
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Grey.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+                <ResourceDictionary Source="/ResourceDictionaries/Converters.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Margin="20" x:Name="mainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0">
+            <Button  Margin="9,20" x:Name="btnBack"   Height="20" Padding="0" HorizontalAlignment="Left"  Command="{Binding BackCommand}" CommandParameter="{Binding ElementName=detailWindow}"
+                Background="Transparent" BorderBrush="{x:Null}" Foreground="#585858">
+                <TextBlock>
+                    <Run Text="&#xE72B;"
+                         FontFamily="Segoe MDL2 Assets" 
+                         FontWeight="DemiBold"
+                         FontSize="13"/>
+                    <Run Text="Back"
+                         FontSize="16"/>
+                </TextBlock>
+            </Button>
+            <TextBlock Margin="5" Grid.Row="0" Text="Details" x:Name="txtTitle" VerticalAlignment="Top"  FontSize="24"  Foreground="#797985" Style="{StaticResource TextBlockStyle}"/>
+        </DockPanel>
+        <TabControl Height="Auto" Grid.Row="1" BorderThickness="0" SelectedIndex="{Binding SelectedTab}" SelectedItem="{Binding SelectedObject}">
+            <TabControl.Resources>
+                <Style TargetType="TabItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="TabItem">
+                                <Border Name="Border" BorderThickness="1,1,1,0" BorderBrush="Gainsboro" CornerRadius="4,4,0,0" Margin="-1,0,3,0">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                        ContentSource="Header" 
+                                        Margin="10,2"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="Border" Property="Background" Value="GhostWhite" />
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="False">
+                                        <Setter TargetName="Border" Property="Background" Value="#F2F2F2" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TabControl.Resources>
+            <TabControl.Background>
+                <SolidColorBrush Color="white" />
+            </TabControl.Background>
+          
+            <TabItem  Header="Categories" Foreground="#797985">
+                <ContentControl  Content="{Binding CategoryViewModel, IsAsync=True}" >
+                    <ContentControl.Style>
+                        <Style TargetType="ContentControl">
+                            <Style.Triggers>
+                                <Trigger Property="IsEnabled" Value="false">
+                                    <Setter Property="BitmapEffect">
+                                        <Setter.Value>
+                                            <BlurBitmapEffect KernelType="Box" Radius="3" />
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ContentControl.Style>
+                </ContentControl>                
+            </TabItem >
+
+            <TabItem  Header="Suppliers" Foreground="#797985" >
+                <ContentControl  Content="{Binding SupplierViewModel, IsAsync=True}" >
+                    <ContentControl.Style>
+                        <Style TargetType="ContentControl">
+                            <Style.Triggers>
+                                <Trigger Property="IsEnabled" Value="false">
+                                    <Setter Property="BitmapEffect">
+                                        <Setter.Value>
+                                            <BlurBitmapEffect KernelType="Box" Radius="3" />
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ContentControl.Style>
+                </ContentControl>
+            </TabItem >
+        </TabControl>        
+    </Grid>
+</Window>

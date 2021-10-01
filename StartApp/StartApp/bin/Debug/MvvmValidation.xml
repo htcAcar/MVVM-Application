@@ -1,0 +1,825 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MvvmValidation</name>
+    </assembly>
+    <members>
+        <member name="T:MvvmValidation.IAsyncValidationRule">
+            <summary>
+            Represents an asynchronous validation rule.
+            </summary>
+        </member>
+        <member name="M:MvvmValidation.Internal.Guard.NotNull``1(``0,System.String,System.String,System.String,System.Int32)">
+            <summary>
+                Ensures that the given value is a non-null value.
+            </summary>
+            <param name="value">Value to check.</param>
+            <param name="paramName">The argument name.</param>
+            <param name="callerMemberName">To be populated by the compiler.</param>
+            <param name="callerFilePath">To be populated by the compiler.</param>
+            <param name="callerLineNumber">To be populated by the compiler.</param>
+            <exception cref="T:System.ArgumentNullException">
+                <paramref name="value" /> is a null value.
+            </exception>
+        </member>
+        <member name="M:MvvmValidation.Internal.Guard.NotNullOrEmpty(System.String,System.String,System.String,System.String,System.Int32)">
+            <summary>
+                Ensures that the given value is not null
+                or an empty string.
+            </summary>
+            <param name="value">The value to check.</param>
+            <param name="argumentName">The name of the argument that is being checked.</param>
+            <param name="callerMemberName">To be populated by the compiler.</param>
+            <param name="callerFilePath">To be populated by the compiler.</param>
+            <param name="callerLineNumber">To be populated by the compiler.</param>
+            <exception cref="T:System.ArgumentNullException">Value is a null value.</exception>
+            <exception cref="T:System.ArgumentException">Value is an empty string value.</exception>
+        </member>
+        <member name="M:MvvmValidation.Internal.Guard.Assert(System.Boolean,System.String,System.String,System.String,System.Int32)">
+            <summary>
+                Asserts the specified condition.
+            </summary>
+            <param name="condition">The condition to assert.</param>
+            <param name="message">The message to show when the assertion fails.</param>
+            <param name="callerMemberName">To be populated by the compiler.</param>
+            <param name="callerFilePath">To be populated by the compiler.</param>
+            <param name="callerLineNumber">To be populated by the compiler.</param>
+        </member>
+        <member name="T:MvvmValidation.Internal.PropertyName">
+            <summary>
+            Gets property name using lambda expressions.
+            </summary>
+        </member>
+        <member name="M:MvvmValidation.Internal.PropertyName.For``1(System.Linq.Expressions.Expression{System.Func{``0}},System.Boolean)">
+            <summary>
+            Returns the property name by given expression.
+            </summary>
+            <typeparam name="T">Type of property's return value</typeparam>
+            <param name="expression">The expression.</param>
+            <param name="compound"><c>True</c> if the full expression path should be used to build the string. For example, 
+            call PropertyName.For(() => MyObj.Property.NestedProperty) will result in string "MyObj.Property.NestedProperty".
+            If <c>False</c> it will return only the last part, which is "NestedProperty" in the example above.</param>
+        </member>
+        <member name="M:MvvmValidation.Internal.PropertyName.For(System.Linq.Expressions.Expression{System.Func{System.Object}},System.Boolean)">
+            <summary>
+            Returns the property name by given expression.
+            </summary>
+            <param name="expression">The expression.</param>
+            <param name="compound"><c>True</c> if the full expression path should be used to build the string. For example, 
+            call PropertyName.For(() => MyObj.Property.NestedProperty) will result in string "MyObj.Property.NestedProperty".
+            If <c>False</c> it will return only the last part, which is "NestedProperty" in the example above.</param>
+        </member>
+        <member name="M:MvvmValidation.Internal.PropertyName.GetMemberName(System.Linq.Expressions.Expression,System.Boolean)">
+            <summary>
+            Gets the member name by give expression.
+            </summary>
+            <param name="expression">The expression.</param>
+            <param name="compound"><c>True</c> if the full expression path should be used to build the string. For example, 
+            call GetMemberName(() => MyObj.Property.NestedProperty) will result in string "MyObj.Property.NestedProperty".
+            If <c>False</c> it will return only the last part, which is "NestedProperty" in the example above.</param>
+        </member>
+        <member name="T:MvvmValidation.IValidatable">
+            <summary>
+            Represents an object that can be validated.
+            </summary>
+        </member>
+        <member name="M:MvvmValidation.IValidatable.Validate">
+            <summary>
+            Validates the object asyncrhonously.
+            </summary>
+            <returns>Task that represents the validation operation.</returns>
+        </member>
+        <member name="T:MvvmValidation.IValidationResultFormatter">
+            <summary>
+            Represents a formatter that can be used to format an instance of <see cref="T:MvvmValidation.ValidationResult"/> to a string.
+            </summary>
+        </member>
+        <member name="M:MvvmValidation.IValidationResultFormatter.Format(MvvmValidation.ValidationResult)">
+            <summary>
+            Converts the specified validation result object to a string.
+            </summary>
+            <param name="validationResult">The validation result to format.</param>
+            <returns>A string representation of <paramref name="validationResult"/></returns>
+        </member>
+        <member name="T:MvvmValidation.IValidationRule">
+            <summary>
+            Represents a validation rule.
+            </summary>
+        </member>
+        <member name="M:MvvmValidation.IValidationRule.WithSettings(System.Action{MvvmValidation.ValidationRuleSettings})">
+            <summary>
+            Allows changing the rule settings. 
+            </summary>
+            <param name="setSettingsDelegate">A function that accepts an instance of <see cref="T:MvvmValidation.ValidationRuleSettings"/> that contains settings for this rule.</param>
+            <returns>The same fule instance (allows for "fluent" interface with chained calls).</returns>
+        </member>
+        <member name="T:MvvmValidation.NotifyDataErrorInfoAdapter">
+            <summary>
+            Adapts an instance of <see cref="T:MvvmValidation.ValidationHelper"/> to the <see cref="T:System.ComponentModel.INotifyDataErrorInfo"/> interface.
+            </summary>
+        </member>
+        <member name="M:MvvmValidation.NotifyDataErrorInfoAdapter.#ctor(MvvmValidation.ValidationHelper)">
+            <summary>
+            Initializes a new instance of the <see cref="T:MvvmValidation.NotifyDataErrorInfoAdapter"/> class.
+            </summary>
+            <param name="validator">The adaptee.</param>
+        </member>
+        <member name="M:MvvmValidation.NotifyDataErrorInfoAdapter.#ctor(MvvmValidation.ValidationHelper,System.Threading.SynchronizationContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:MvvmValidation.NotifyDataErrorInfoAdapter"/> class.
+            </summary>
+            <param name="validator">The adaptee.</param>
+            <param name="errorsChangedNotificationContext">Synchronization context that should be used to raise the <see cref="E:MvvmValidation.NotifyDataErrorInfoAdapter.ErrorsChanged"/> event on.</param>
+        </member>
+        <member name="M:MvvmValidation.NotifyDataErrorInfoAdapter.GetErrors(System.String)">
+            <summary>
+            Gets the validation errors for a specified property or for the entire object.
+            </summary>
+            <param name="propertyName">The name of the property to retrieve validation errors for, or null or <see cref="F:System.String.Empty"/> to retrieve errors for the entire object.</param>
+            <returns>
+            The validation errors for the property or object.
+            </returns>
+        </member>
+        <member name="P:MvvmValidation.NotifyDataErrorInfoAdapter.HasErrors">
+            <summary>
+            Gets a value that indicates whether the object has validation errors.
+            </summary>
+            <returns>true if the object currently has validation errors; otherwise, false.</returns>
+        </member>
+        <member name="E:MvvmValidation.NotifyDataErrorInfoAdapter.ErrorsChanged">
+            <summary>
+            Occurs when the validation errors have changed for a property or for the entire object.
+            </summary>
+        </member>
+        <member name="T:MvvmValidation.NumberedListValidationResultFormatter">
+            <summary>
+            An implementation of <see cref="T:MvvmValidation.IValidationResultFormatter"/> that formats the validation result as 
+            a numbered list of errors or an empty string if valid.
+            </summary>
+        </member>
+        <member name="M:MvvmValidation.NumberedListValidationResultFormatter.Format(MvvmValidation.ValidationResult)">
+            <summary>
+            Converts the specified validation result object to a string.
+            </summary>
+            <param name="validationResult">The validation result to format.</param>
+            <returns>
+            A string representation of <paramref name="validationResult"/>
+            </returns>
+        </member>
+        <member name="T:MvvmValidation.RuleResult">
+            <summary>
+            Represents the outcome of a validation rule when executed.
+            </summary>
+        </member>
+        <member name="M:MvvmValidation.RuleResult.Invalid(System.String)">
+            <summary>
+            Creates an "Invalid" result with the given error <paramref name="error"/>.
+            </summary>
+            <param name="error">The error text that describes why this rule is invalid.</param>
+            <returns>An instance of <see cref="T:MvvmValidation.RuleResult"/> that represents an invalid result.</returns>
+        </member>
+        <member name="M:MvvmValidation.RuleResult.Valid">
+            <summary>
+            Creates a "Valid" result.
+            </summary>
+            <returns>An instance of <see cref="T:MvvmValidation.RuleResult"/> that represents a valid outcome of the rule.</returns>
+        </member>
+        <member name="M:MvvmValidation.RuleResult.Assert(System.Boolean,System.String)">
+            <summary>
+            Asserts the specified condition and if <c>false</c> then creates and invalid result with the given <paramref name="errorMessage"/>. 
+            If <c>true</c>, returns a valid result.
+            </summary>
+            <param name="condition">The assertion.</param>
+            <param name="errorMessage">The error message in case if the <paramref name="condition"/> is not <c>true</c>.</param>
+            <returns>An instance of <see cref="T:MvvmValidation.RuleResult"/> that represents the result of the assertion.</returns>
+        </member>
+        <member name="M:MvvmValidation.RuleResult.#ctor">
+            <summary>
+            Creates an empty (valid) instance of <see cref="T:MvvmValidation.RuleResult"/>. 
+            The <see cref="M:MvvmValidation.RuleResult.AddError(System.String)"/> method can be used to add errors to the result later.
+            </summary>
+        </member>
+        <member name="P:MvvmValidation.RuleResult.IsValid">
+            <summary>
+            Gets a value indicating whether the validation rule passed (valid).
+            </summary>
+        </member>
+        <member name="P:MvvmValidation.RuleResult.Errors">
+            <summary>
+            Gets the error messages in case if the target is invalid according to this validation rule.
+            </summary>
+        </member>
+        <member name="M:MvvmValidation.RuleResult.AddError(System.String)">
+            <summary>
+            Adds an error to the result.
+            </summary>
+            <param name="error">The error message to add.</param>
+        </member>
+        <member name="M:MvvmValidation.RuleResult.Equals(MvvmValidation.RuleResult)">
+            <summary>
+            Indicates whether the current object is equal to another object of the same type.
+            </summary>
+            <param name="other">An object to compare with this object.</param>
+            <returns>
+            true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.
+            </returns>
+        </member>
+        <member name="M:MvvmValidation.RuleResult.Equals(System.Object)">
+            <summary>
+            Determines whether the specified <see cref="T:System.Object"/> is equal to this instance.
+            </summary>
+            <param name="obj">The <see cref="T:System.Object"/> to compare with this instance.</param>
+            <returns>
+              <c>true</c> if the specified <see cref="T:System.Object"/> is equal to this instance; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:MvvmValidation.RuleResult.GetHashCode">
+            <summary>
+            Returns a hash code for this instance.
+            </summary>
+            <returns>
+            A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+            </returns>
+        </member>
+        <member name="T:MvvmValidation.RuleResultExtensions">
+            <summary>
+            Contains helper extension methods for working with <see cref="T:MvvmValidation.RuleResult"/>.
+            </summary>
+        </member>
+        <member name="M:MvvmValidation.RuleResultExtensions.Combine(MvvmValidation.RuleResult,MvvmValidation.RuleResult)">
+            <summary>
+            Merges <paramref name="firstRuleResult"/> with given <paramref name="secondRuleResult"/> and returns a new instance of <see cref="T:MvvmValidation.ValidationResult"/>
+            that represents the merged result (the result that contains errors from both results whithout duplicates).
+            </summary>
+            <param name="firstRuleResult">The first validation result to merge.</param>
+            <param name="secondRuleResult">The second validation result to merge.</param>
+            <returns>A new instance of <see cref="T:MvvmValidation.RuleResult"/> that represents the merged result (the result that contains errors from both results whithout duplicates).</returns>
+        </member>
+        <member name="T:MvvmValidation.ValidationError">
+            <summary>
+            Represents a validation error.
+            </summary>
+        </member>
+        <member name="P:MvvmValidation.ValidationError.ErrorText">
+            <summary>
+            Gets the error message.
+            </summary>
+        </member>
+        <member name="P:MvvmValidation.ValidationError.Target">
+            <summary>
+            Gets the target of the error (a property name or any other arbitrary object).
+            </summary>
+        </member>
+        <member name="M:MvvmValidation.ValidationError.Equals(MvvmValidation.ValidationError)">
+            <summary>
+            Indicates whether the current object is equal to another object of the same type.
+            </summary>
+            <param name="other">An object to compare with this object.</param>
+            <returns>
+            true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.
+            </returns>
+        </member>
+        <member name="M:MvvmValidation.ValidationError.Equals(System.Object)">
+            <summary>
+            Determines whether the specified <see cref="T:System.Object"/> is equal to this instance.
+            </summary>
+            <param name="obj">The <see cref="T:System.Object"/> to compare with this instance.</param>
+            <returns>
+              <c>true</c> if the specified <see cref="T:System.Object"/> is equal to this instance; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:MvvmValidation.ValidationError.GetHashCode">
+            <summary>
+            Returns a hash code for this instance.
+            </summary>
+            <returns>
+            A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+            </returns>
+        </member>
+        <member name="M:MvvmValidation.ValidationError.ToString">
+            <summary>
+            Returns a <see cref="T:System.String"/> that represents this instance.
+            </summary>
+            <returns>
+            A <see cref="T:System.String"/> that represents this instance.
+            </returns>
+        </member>
+        <member name="M:MvvmValidation.ValidationError.op_Implicit(MvvmValidation.ValidationError)~System.String">
+            <summary>
+            Performs an implicit conversion from <see cref="T:MvvmValidation.ValidationError"/> to <see cref="T:System.String"/>.
+            </summary>
+            <param name="error">The error.</param>
+            <returns>
+            The result of the conversion.
+            </returns>
+        </member>
+        <member name="T:MvvmValidation.ValidationErrorCollection">
+            <summary>
+            Represents a collection of <see cref="T:MvvmValidation.ValidationError"/> instances.
+            </summary>
+        </member>
+        <member name="T:MvvmValidation.ValidationException">
+            <summary>
+            Represents an exception that occurs during validation
+            </summary>
+        </member>
+        <member name="M:MvvmValidation.ValidationException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:MvvmValidation.ValidationException"/> class.
+            </summary>
+        </member>
+        <member name="M:MvvmValidation.ValidationException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:MvvmValidation.ValidationException"/> class.
+            </summary>
+            <param name="message">The message.</param>
+        </member>
+        <member name="M:MvvmValidation.ValidationException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:MvvmValidation.ValidationException"/> class.
+            </summary>
+            <param name="message">The message.</param>
+            <param name="innerException">The inner exception.</param>
+        </member>
+        <member name="T:MvvmValidation.ValidationHelper">
+            <summary>
+            Main helper class that contains the functionality of managing validation rules, 
+            executing validation using those rules and keeping validation results.
+            </summary>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelper.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:MvvmValidation.ValidationHelper"/> class.
+            </summary>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelper.#ctor(MvvmValidation.ValidationSettings)">
+            <summary>
+            Initializes a new instance of the <see cref="T:MvvmValidation.ValidationHelper"/> class.
+            </summary>
+            <param name="settings">An instance of <see cref="T:MvvmValidation.ValidationSettings"/> that control the behavior of this instance of <see cref="T:MvvmValidation.ValidationHelper"/>.</param>
+        </member>
+        <member name="P:MvvmValidation.ValidationHelper.IsValidationSuspended">
+            <summary>
+            Indicates whether the validation is currently suspended using the <see cref="M:MvvmValidation.ValidationHelper.SuppressValidation"/> method.
+            </summary>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelper.AddRule(System.Object,System.Func{MvvmValidation.RuleResult})">
+            <summary>
+            Adds a validation rule that validates the <paramref name="target"/> object.
+            </summary>
+            <param name="target">The validation target (object that is being validated by <paramref name="validateDelegate"/>).</param>
+            <param name="validateDelegate">
+            The validation delegate - a function that returns an instance 
+            of <see cref="T:MvvmValidation.RuleResult"/> that indicated whether the rule has passed and 
+            a collection of errors (in not passed).
+            </param>
+            <returns>An instance of <see cref="T:MvvmValidation.IValidationRule"/> that represents the newly created validation rule.</returns>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelper.AddRule(System.Func{MvvmValidation.RuleResult})">
+            <summary>
+            Adds a simple validation rule.
+            </summary>
+            <param name="validateDelegate">
+            The validation delegate - a function that returns an instance 
+            of <see cref="T:MvvmValidation.RuleResult"/> that indicated whether the rule has passed and 
+            a collection of errors (in not passed).
+            </param>
+            <returns>An instance of <see cref="T:MvvmValidation.IValidationRule"/> that represents the newly created validation rule.</returns>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelper.AddRule(System.String,System.Func{MvvmValidation.RuleResult})">
+            <summary>
+            Adds a validation rule that validates a property of an object. The target property is specified in the <paramref name="targetName"/> parameter.
+            </summary>
+            <param name="targetName">The target property name. Example: AddRule(nameof(MyProperty), ...).</param>
+            <param name="validateDelegate">
+            The validation delegate - a function that returns an instance 
+            of <see cref="T:MvvmValidation.RuleResult"/> that indicated whether the rule has passed and 
+            a collection of errors (in not passed).
+            </param>
+            <example>
+            <code>
+            AddRule(() => Foo, , () => RuleResult.Assert(Foo > 10, "Foo must be greater than 10"))
+            </code>
+            </example>
+            <returns>An instance of <see cref="T:MvvmValidation.IValidationRule"/> that represents the newly created validation rule.</returns>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelper.AddRule(System.Linq.Expressions.Expression{System.Func{System.Object}},System.Func{MvvmValidation.RuleResult})">
+            <summary>
+            OBSOLTE: If you are using C# 6 compiler consider using another overload of this method that 
+            takes a <see cref="T:System.String"/> argument (<see cref="M:MvvmValidation.ValidationHelper.AddRule(System.String,System.Func{MvvmValidation.RuleResult})"/>) 
+            and invoke it with nameof(MyProperty) instead. 
+            </summary>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelper.AddRule(System.String,System.String,System.Func{MvvmValidation.RuleResult})">
+            <summary>
+            Adds a validation rule that validates two dependent properties.
+            </summary>
+            <param name="property1Name">The first target property name. Example: AddRule(nameof(MyProperty), ...).</param>
+            <param name="property2Name">The second target property name. Example: AddRule(..., nameof(MyProperty), ...).</param>
+            <param name="validateDelegate">
+            The validation delegate - a function that returns an instance 
+            of <see cref="T:MvvmValidation.RuleResult"/> that indicated whether the rule has passed and 
+            a collection of errors (in not passed).
+            </param>
+            <example>
+            <code>
+            AddRule(() => Foo, () => Bar, () => RuleResult.Assert(Foo > Bar, "Foo must be greater than bar"))
+            </code>
+            </example>
+            <returns>An instance of <see cref="T:MvvmValidation.IValidationRule"/> that represents the newly created validation rule.</returns>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelper.AddRule(System.Linq.Expressions.Expression{System.Func{System.Object}},System.Linq.Expressions.Expression{System.Func{System.Object}},System.Func{MvvmValidation.RuleResult})">
+            <summary>
+            OBSOLTE: If you are using C# 6 compiler consider using another overload of this method that 
+            takes a <see cref="T:System.String"/> arguments (<see cref="M:MvvmValidation.ValidationHelper.AddRule(System.String,System.String,System.Func{MvvmValidation.RuleResult})"/>) 
+            and invoke it with nameof(MyProperty) instead. 
+            </summary>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelper.AddRule(System.Collections.Generic.IEnumerable{System.String},System.Func{MvvmValidation.RuleResult})">
+            <summary>
+            Adds a validation rule that validates a collection of dependent properties.
+            </summary>
+            <param name="properties">The collection of target property expressions. Example: AddRule(new [] { () => MyProperty1, () => MyProperty2, () => MyProperty3 }, ...).</param>
+            <param name="validateDelegate">
+            The validation delegate - a function that returns an instance 
+            of <see cref="T:MvvmValidation.RuleResult"/> that indicated whether the rule has passed and 
+            a collection of errors (in not passed).
+            </param>
+            <returns>An instance of <see cref="T:MvvmValidation.IValidationRule"/> that represents the newly created validation rule.</returns>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelper.AddRule(System.Collections.Generic.IEnumerable{System.Linq.Expressions.Expression{System.Func{System.Object}}},System.Func{MvvmValidation.RuleResult})">
+            <summary>
+            OBSOLTE: If you are using C# 6 compiler consider using another overload of this method that 
+            takes a collection of <see cref="T:System.String"/> (<see cref="M:MvvmValidation.ValidationHelper.AddRule(System.Collections.Generic.IEnumerable{System.String},System.Func{MvvmValidation.RuleResult})"/>) 
+            and invoke it with nameof(MyProperty) instead. 
+            </summary>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelper.AddAsyncRule(System.Object,System.Func{System.Threading.Tasks.Task{MvvmValidation.RuleResult}})">
+            <summary>
+            Adds an asynchronious validation rule that validates the <paramref name="target"/> object.
+            </summary>
+            <param name="target">The validation target (object that is being validated by <paramref name="validateAction"/>).</param>
+            <param name="validateAction">The validation delegate - a function that performs asyncrhonious validation.</param>
+            <returns>An instance of <see cref="T:MvvmValidation.IAsyncValidationRule"/> that represents the newly created validation rule.</returns>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelper.AddAsyncRule(System.Func{System.Threading.Tasks.Task{MvvmValidation.RuleResult}})">
+            <summary>
+            Adds an asynchronious validation rule.
+            </summary>
+            <param name="validateAction">The validation delegate - a function that performs asyncrhonious validation.</param>
+            <returns>An instance of <see cref="T:MvvmValidation.IAsyncValidationRule"/> that represents the newly created validation rule.</returns>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelper.AddAsyncRule(System.String,System.Func{System.Threading.Tasks.Task{MvvmValidation.RuleResult}})">
+            <summary>
+            Adds an asynchronious validation rule that validates a property of an object. The target property is specified in the <paramref name="propertyName"/> parameter.
+            </summary>
+            <param name="propertyName">The target property name. Example: AddAsyncRule(nameof(MyProperty), ...).</param>
+            <param name="validateAction">The validation delegate - a function that performs asyncrhonious validation.</param>
+            <example>
+            <code>
+            AddRule(() => Foo, 
+                    () => 
+                    {
+                        return ValidationServiceFacade.ValidateFooAsync(Foo)
+                            .ContinueWith(t => return RuleResult.Assert(t.Result.IsValid, "Foo must be greater than 10"));
+                    })
+            </code>
+            </example>
+            <returns>An instance of <see cref="T:MvvmValidation.IAsyncValidationRule"/> that represents the newly created validation rule.</returns>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelper.AddAsyncRule(System.Linq.Expressions.Expression{System.Func{System.Object}},System.Func{System.Threading.Tasks.Task{MvvmValidation.RuleResult}})">
+            <summary>
+            OBSOLTE: If you are using C# 6 compiler consider using another overload of this method that 
+            takes a <see cref="T:System.String"/> argument (<see cref="M:MvvmValidation.ValidationHelper.AddAsyncRule(System.String,System.Func{System.Threading.Tasks.Task{MvvmValidation.RuleResult}})"/>) 
+            and invoke it with nameof(MyProperty) instead. 
+            </summary>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelper.AddAsyncRule(System.String,System.String,System.Func{System.Threading.Tasks.Task{MvvmValidation.RuleResult}})">
+            <summary>
+            Adds an asynchronious validation rule that validates two dependent properties.
+            </summary>
+            <param name="property1Name">The first target property name. Example: AddRule(nameof(MyProperty), ...).</param>
+            <param name="property2Name">The second target property name. Example: AddRule(..., nameof(MyProperty), ...).</param>
+            <param name="validateAction">The validation delegate - a function that performs asyncrhonious validation.</param>
+            <example>
+            <code>
+            AddRule(() => Foo, () => Bar
+                       () => 
+                    {
+                           return ValidationServiceFacade.ValidateFooAndBar(Foo, Bar)
+                                  .ContinueWith(t => RuleResult.Assert(t.Result.IsValid, "Foo must be greater than 10"));
+                       })
+            </code>
+            </example>
+            <returns>An instance of <see cref="T:MvvmValidation.IAsyncValidationRule"/> that represents the newly created validation rule.</returns>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelper.AddAsyncRule(System.Linq.Expressions.Expression{System.Func{System.Object}},System.Linq.Expressions.Expression{System.Func{System.Object}},System.Func{System.Threading.Tasks.Task{MvvmValidation.RuleResult}})">
+            <summary>
+            OBSOLTE: If you are using C# 6 compiler consider using another overload of this method that 
+            takes <see cref="T:System.String"/> arguments (<see cref="M:MvvmValidation.ValidationHelper.AddAsyncRule(System.String,System.String,System.Func{System.Threading.Tasks.Task{MvvmValidation.RuleResult}})"/>) 
+            and invoke it with nameof(MyProperty) instead. 
+            </summary>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelper.AddAsyncRule(System.Collections.Generic.IEnumerable{System.String},System.Func{System.Threading.Tasks.Task{MvvmValidation.RuleResult}})">
+            <summary>
+            Adds an asynchronious validation rule that validates a collection of dependent properties.
+            </summary>
+            <param name="properties">The collection of target property names. Example: AddAsyncRule(new [] { nameof(MyProperty1), nameof(MyProperty2), nameof(MyProperty3) }, ...).</param>
+            <param name="validateAction">The validation delegate - a function that performs asyncrhonious validation.</param>
+            <returns>An instance of <see cref="T:MvvmValidation.IAsyncValidationRule"/> that represents the newly created validation rule.</returns>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelper.AddAsyncRule(System.Collections.Generic.IEnumerable{System.Linq.Expressions.Expression{System.Func{System.Object}}},System.Func{System.Threading.Tasks.Task{MvvmValidation.RuleResult}})">
+            <summary>
+            OBSOLTE: If you are using C# 6 compiler consider using another overload of this method that 
+            takes a collection of <see cref="T:System.String"/> (<see cref="M:MvvmValidation.ValidationHelper.AddAsyncRule(System.Collections.Generic.IEnumerable{System.String},System.Func{System.Threading.Tasks.Task{MvvmValidation.RuleResult}})"/>) 
+            and invoke it with nameof(MyProperty) instead. 
+            </summary>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelper.RemoveRule(MvvmValidation.IValidationRule)">
+            <summary>
+            Removes the specified <paramref name="rule"/>.
+            </summary>
+            <param name="rule">Validation rule instance.</param>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelper.RemoveAllRules">
+            <summary>
+            Removes all validation rules.
+            </summary>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelper.GetResult">
+            <summary>
+            Returns the current validation state (all errors tracked by this instance of <see cref="T:MvvmValidation.ValidationHelper"/>).
+            </summary>
+            <returns>An instance of <see cref="T:MvvmValidation.ValidationResult"/> that contains an indication whether the object is valid and a collection of errors if not.</returns>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelper.GetResult(System.Object)">
+            <summary>
+            Returns the current validation state for the given <paramref name="target"/> (all errors tracked by this instance of <see cref="T:MvvmValidation.ValidationHelper"/>).
+            </summary>
+            <param name="target">The validation target for which to retrieve the validation state.</param>
+            <returns>An instance of <see cref="T:MvvmValidation.ValidationResult"/> that contains an indication whether the object is valid and a collection of errors if not.</returns>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelper.GetResult(System.String)">
+            <summary>
+            Returns the current validation state for a property represented by <paramref name="targetName"/> (all errors tracked by this instance of <see cref="T:MvvmValidation.ValidationHelper"/>).
+            </summary>
+            <param name="targetName">The property for which to retrieve the validation state. Example: GetResult(() => MyProperty)</param>
+            <returns>An instance of <see cref="T:MvvmValidation.ValidationResult"/> that contains an indication whether the object is valid and a collection of errors if not.</returns>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelper.GetResult(System.Linq.Expressions.Expression{System.Func{System.Object}})">
+            <summary>
+            OBSOLTE: If you are using C# 6 compiler consider using another overload of this method that 
+            takes a <see cref="T:System.String"/> argument (<see cref="M:MvvmValidation.ValidationHelper.GetResult(System.String)"/>) 
+            and invoke it with nameof(MyProperty) instead. 
+            </summary>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelper.Validate(System.String)">
+            <summary>
+            Validates (executes validation rules) the property specified in the <paramref name="targetName"/> parameter.
+            </summary>
+            <param name="targetName">Name of the property to validate. Example: Validate(nameof(MyProperty)).</param>
+            <returns>Result that indicates whether the given property is valid and a collection of errors, if not valid.</returns>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelper.Validate(System.Linq.Expressions.Expression{System.Func{System.Object}})">
+            <summary>
+            OBSOLTE: If you are using C# 6 compiler consider using another overload of this method that 
+            takes a <see cref="T:System.String"/> argument (<see cref="M:MvvmValidation.ValidationHelper.Validate(System.String)"/>) 
+            and invoke it with nameof(MyProperty) instead. 
+            </summary>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelper.Validate(System.Object)">
+            <summary>
+            Validates (executes validation rules) the specified target object.
+            </summary>
+            <param name="target">The target object to validate.</param>
+            <returns>Result that indicates whether the given target object is valid and a collection of errors, if not valid.</returns>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelper.ValidateCaller(System.String)">
+            <summary>
+            Validates (executes validation rules) the calling property.
+            </summary>
+            <param name="callerName">Name of the property to validate (provided by the c# compiler and should not be specified exlicitly).</param>
+            <returns>Result that indicates whether the given property is valid and a collection of errors, if not valid.</returns>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelper.ValidateAll">
+            <summary>
+            Executes validation using all validation rules. 
+            </summary>
+            <returns>Result that indicates whether the validation was succesfull and a collection of errors, if it wasn't.</returns>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelper.ValidateAsync(System.String)">
+            <summary>
+            Executes validation for the given property asynchronously. 
+            Executes all (normal and async) validation rules for the property specified in the <paramref name="targetName"/>.
+            </summary>
+            <param name="targetName">Expression for the property to validate. Example: ValidateAsync(() => MyProperty, ...).</param>
+            <returns>Task that represents the validation operation.</returns>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelper.ValidateAsync(System.Linq.Expressions.Expression{System.Func{System.Object}})">
+            <summary>
+            OBSOLTE: If you are using C# 6 compiler consider using another overload of this method that 
+            takes a <see cref="T:System.String"/> argument (<see cref="M:MvvmValidation.ValidationHelper.ValidateAsync(System.String)"/>) 
+            and invoke it with nameof(MyProperty) instead. 
+            </summary>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelper.ValidateCallerAsync(System.String)">
+            <summary>
+            Executes validation for the calling property asynchronously.
+            </summary>
+            <param name="callerName">Name of the property to validate (provided by the c# compiler and should not be specified exlicitly).</param>
+            <returns>Result that indicates whether the given property is valid and a collection of errors, if not valid.</returns>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelper.ValidateAsync(System.Object)">
+            <summary>
+            Executes validation for the given target asynchronously. 
+            Executes all (normal and async) validation rules for the target object specified in the <paramref name="target"/>.
+            </summary>
+            <param name="target">The target object to validate.</param>
+            <returns>Task that represents the validation operation.</returns>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelper.ValidateAllAsync">
+            <summary>
+            Executes validation using all validation rules asynchronously.
+            </summary>
+            <returns>Task that represents the validation operation.</returns>
+        </member>
+        <member name="E:MvvmValidation.ValidationHelper.ResultChanged">
+            <summary>
+            Occurs when the validation result have changed for a property or for the entire entity (the result that is returned by the <see cref="M:MvvmValidation.ValidationHelper.GetResult"/> method).
+            </summary>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelper.SuppressValidation">
+            <summary>
+            Suppresses all the calls to the Validate* methods until the returned <see cref="T:System.IDisposable"/> is disposed
+            by calling <see cref="M:System.IDisposable.Dispose"/>. 
+            </summary>
+            <remarks>
+            This method is convenient to use when you want to suppress validation when setting initial value to a property. In this case you would
+            wrap the code that sets the property into a <c>using</c> block. Like this:
+            <code>
+            using (Validation.SuppressValidation()) 
+            {
+                MyProperty = "Initial Value";
+            }
+            </code>
+            </remarks>
+            <returns>An instance of <see cref="T:System.IDisposable"/> that serves as a handle that you can call <see cref="M:System.IDisposable.Dispose"/> on to resume validation. The value can also be used in a <c>using</c> block.</returns>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelper.Reset">
+            <summary>
+            Resets the validation state. If there were any broken rules 
+            then the targets for those rules will become valid again and the <see cref="E:MvvmValidation.ValidationHelper.ResultChanged"/> event will be rised.
+            </summary>
+        </member>
+        <member name="T:MvvmValidation.ValidationHelperExtensions">
+            <summary>
+            Contains extensions methods for <see cref="T:MvvmValidation.ValidationHelper"/>.
+            </summary>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelperExtensions.AddRequiredRule(MvvmValidation.ValidationHelper,System.Linq.Expressions.Expression{System.Func{System.Object}},System.String)">
+            <summary>
+            Adds a rule that checks that the property represented by <paramref name="propertyExpression"/> is not
+            null or empty string. 
+            </summary>
+            <param name="validator">An instance of <see cref="T:MvvmValidation.ValidationHelper"/> that is used for validation.</param>
+            <param name="propertyExpression">Expression that specifies the property to validate. Example: Validate(() => MyProperty).</param>
+            <param name="errorMessage">Error message in case if the property is null or empty.</param>
+            <returns>An instance of <see cref="T:MvvmValidation.IValidationRule"/> that represents the newly created validation rule.</returns>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelperExtensions.AddChildValidatable(MvvmValidation.ValidationHelper,System.Linq.Expressions.Expression{System.Func{MvvmValidation.IValidatable}})">
+            <summary>
+            Creates a validation rule that validates the specified child <see cref="T:MvvmValidation.IValidatable"/> object and adds errors
+            to this object if invalid.
+            </summary>
+            <param name="validator">An instance of <see cref="T:MvvmValidation.ValidationHelper"/> that is used for validation.</param>
+            <param name="childValidatableGetter">Expression for getting the <see cref="T:MvvmValidation.IValidatable"/> object to add as child.</param>
+            <returns>An instance of <see cref="T:MvvmValidation.IValidationRule"/> that represents the newly created validation rule.</returns>
+        </member>
+        <member name="M:MvvmValidation.ValidationHelperExtensions.AddChildValidatableCollection(MvvmValidation.ValidationHelper,System.Linq.Expressions.Expression{System.Func{System.Collections.Generic.IEnumerable{MvvmValidation.IValidatable}}})">
+            <summary>
+            Creates a validation rule that validates all the <see cref="T:MvvmValidation.IValidatable"/> items in the collection specified in <paramref name="validatableCollectionGetter"/>
+            and adds error to this object from all the validatable items in invalid.
+            </summary>
+            <param name="validator">An instance of <see cref="T:MvvmValidation.ValidationHelper"/> that is used for validation.</param>
+            <param name="validatableCollectionGetter">Expression for getting the collection of <see cref="T:MvvmValidation.IValidatable"/> objects to add as child items.</param>
+            <returns>An instance of <see cref="T:MvvmValidation.IValidationRule"/> that represents the newly created validation rule.</returns>
+        </member>
+        <member name="T:MvvmValidation.ValidationResult">
+            <summary>
+            Encapsulates result of a validation. Contains a boolean <see cref="P:MvvmValidation.ValidationResult.IsValid"/> and a collection of errors <see cref="P:MvvmValidation.ValidationResult.ErrorList"/>.
+            </summary>
+        </member>
+        <member name="P:MvvmValidation.ValidationResult.ErrorList">
+            <summary>
+            Gets the list of errors if any. If valid, returns an empty collection.
+            </summary>
+        </member>
+        <member name="P:MvvmValidation.ValidationResult.IsValid">
+            <summary>
+            Gets a value indicating whether the validation was sucessful. If not, see <see cref="P:MvvmValidation.ValidationResult.ErrorList"/> for the list of errors.
+            </summary>
+        </member>
+        <member name="P:MvvmValidation.ValidationResult.Item(System.Object)">
+            <summary>
+            Gets an error by <paramref name="target"/>, or <c>null</c> if valid.
+            </summary>
+        </member>
+        <member name="M:MvvmValidation.ValidationResult.ToString(MvvmValidation.IValidationResultFormatter)">
+            <summary>
+            Formats this instance to a string using given <see cref="T:MvvmValidation.IValidationResultFormatter"/>.
+            </summary>
+            <param name="formatter">The formatter that can format the validation result.</param>
+            <returns>
+            A string that represents this validation result.
+            </returns>
+        </member>
+        <member name="M:MvvmValidation.ValidationResult.ToString">
+            <summary>
+            Returns a <see cref="T:System.String"/> that represents this instance.
+            </summary>
+            <returns>
+            A <see cref="T:System.String"/> that represents this instance.
+            </returns>
+        </member>
+        <member name="T:MvvmValidation.ValidationResultChangedEventArgs">
+            <summary>
+            Contains arguments for the <see cref="E:MvvmValidation.ValidationHelper.ResultChanged"/> event.
+            </summary>
+        </member>
+        <member name="P:MvvmValidation.ValidationResultChangedEventArgs.Target">
+            <summary>
+            Gets the target, for which the validation result has changed.
+            </summary>
+        </member>
+        <member name="P:MvvmValidation.ValidationResultChangedEventArgs.NewResult">
+            <summary>
+            Gets the new validation result.
+            </summary>
+        </member>
+        <member name="T:MvvmValidation.ValidationResultExtensions">
+            <summary>
+            Contains helper extension methods for working with <see cref="T:MvvmValidation.ValidationResult"/>.
+            </summary>
+        </member>
+        <member name="M:MvvmValidation.ValidationResultExtensions.Combine(MvvmValidation.ValidationResult,MvvmValidation.ValidationResult)">
+            <summary>
+            Merges <paramref name="firstResult"/> with given <paramref name="secondResult"/> and returns a new instance of <see cref="T:MvvmValidation.ValidationResult"/>
+            that represents the merged result (the result that contains errors from both results whithout duplicates).
+            </summary>
+            <param name="firstResult">The first validation result to merge.</param>
+            <param name="secondResult">The second validation result to merge.</param>
+            <returns>A new instance of <see cref="T:MvvmValidation.ValidationResult"/> that represents the merged result (the result that contains errors from both results whithout duplicates).</returns>
+        </member>
+        <member name="T:MvvmValidation.ValidationRuleSettings">
+            <summary>
+            Represents validation rule settings that control the rule behavior.
+            </summary>
+        </member>
+        <member name="P:MvvmValidation.ValidationRuleSettings.ExecuteOnAlreadyInvalidTarget">
+            <summary>
+            When set (not null), determines whether the rule should be executed whan the target is already invalid after executing previous rule(s). 
+            If not set (null), the default behavior applies - to skip the rule.
+            </summary>
+        </member>
+        <member name="T:MvvmValidation.ValidationScope">
+            <summary>
+            Provides a possibility to comibine multiple instances of <see cref="T:MvvmValidation.ValidationHelper"/> into one scope and 
+            execute the validation in one go with multiple validators. Useful when validating multiple view models that are
+            not aware of each other and know only about the scope. 
+            </summary>
+        </member>
+        <member name="E:MvvmValidation.ValidationScope.ResultChanged">
+            <summary>
+            Occurs when validation result changes.
+            </summary>
+        </member>
+        <member name="M:MvvmValidation.ValidationScope.RegisterValidator(MvvmValidation.ValidationHelper)">
+            <summary>
+            Registers a validator with this scope. 
+            </summary>
+            <param name="validator">Validator to register.</param>
+        </member>
+        <member name="M:MvvmValidation.ValidationScope.ValidateAllAsync">
+            <summary>
+            Executes the validation of all registered validators and combines the result from all of them.
+            </summary>
+            <returns>The validation result.</returns>
+        </member>
+        <member name="M:MvvmValidation.ValidationScope.GetResult">
+            <summary>
+            Gets the result of last validation (without executing the validation).
+            </summary>
+            <returns>The result of last validation.</returns>
+        </member>
+        <member name="T:MvvmValidation.ValidationSettings">
+            <summary>
+            Contains settings that control the behavior of a particular instance of <see cref="T:MvvmValidation.ValidationHelper"/>.
+            </summary>
+        </member>
+        <member name="P:MvvmValidation.ValidationSettings.DefaultRuleSettings">
+            <summary>
+            When specified, overrides the default validation rule settings for all rules (each rule can still specify its own settings during registration). 
+            </summary>
+        </member>
+    </members>
+</doc>

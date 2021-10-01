@@ -1,0 +1,146 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Grey.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    <Style x:Key="TextBlockStyle" TargetType="{x:Type TextBlock}" >
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Grid.ColumnSpan" Value="2"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="TextAlignment" Value="Center"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+    </Style>
+    <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid >
+                        <Rectangle Width="80" Height="30" RadiusX="10" RadiusY="10"
+                                Stroke ="#797985"  StrokeThickness="3" Fill="#797985">
+                        </Rectangle>
+                        <ContentControl Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Foreground" Value="#F2F2F2"/>
+        <Setter Property="Margin" Value="5"/>
+    </Style>
+    <Style x:Key="MainPageButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid >
+                        <Rectangle Width="100" Height="90" RadiusX="10" RadiusY="10"
+                                Stroke ="#8D8D8D"  StrokeThickness="3" Fill="#8D8D8D">
+                        </Rectangle>
+                        <ContentControl Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Foreground" Value="#F2F2F2"/>
+        <Setter Property="Margin" Value="5"/>
+    </Style>
+    <Style x:Key="DisableMainPageButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid >
+                        <Rectangle Width="100" Height="90" RadiusX="10" RadiusY="10"
+                                Stroke ="#C3C0C0"  StrokeThickness="3" Fill="#C3C0C0">
+                        </Rectangle>
+                        <ContentControl Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Foreground" Value="#F2F2F2"/>
+        <Setter Property="Margin" Value="5"/>
+    </Style>
+    <Style  x:Key="PackIconStyle"  TargetType="materialDesign:PackIcon" >        
+        <Setter Property="Margin" Value="10"/>
+        <Setter Property="Grid.Column" Value="0"/>
+        <Setter Property="Width" Value="20"/>
+        <Setter Property="Height" Value="20"/>
+        <Setter Property="Foreground" Value="#797985"/>
+        <Setter Property="VerticalAlignment" Value="Bottom"/>
+    </Style>
+    <Style x:Key="TextBoxStyle" TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}" >
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="Grid.Column" Value="1"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Foreground" Value="#797985"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Width" Value="230"/>
+        <Setter Property="MaxLength" Value="30"/>
+        <Setter Property="Validation.ErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <AdornedElementPlaceholder x:Name="placeholder" />
+                        <Border Background="Transparent" BorderBrush="#DD1B1B" BorderThickness="1.5"
+                ToolTip="{Binding ElementName=placeholder, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"
+                ToolTipService.InitialShowDelay="0"
+                VerticalAlignment="Top"
+                Margin="11,20"
+                Width="17"
+                Height="17"
+                CornerRadius="10">
+                            <TextBlock Text="!"
+                       Foreground="#DD1B1B"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+                        </Border>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+ 
+    <Style x:Key="PasswordBoxStyle" TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource MaterialDesignFloatingHintPasswordBox}" >        
+        <Setter Property="Grid.Column" Value="1"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Foreground" Value="#797985"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="Width" Value="230"/> 
+        <Setter Property="Validation.ErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate>                    
+                    <StackPanel Orientation="Horizontal">
+                        <AdornedElementPlaceholder x:Name="placeholder" />
+                        <Border Background="#D92D2D"
+                ToolTip="{Binding ElementName=placeholder, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"
+                ToolTipService.InitialShowDelay="0"
+                VerticalAlignment="Top"
+                Margin="15,10"
+                Width="20"
+                Height="20"
+                CornerRadius="10">
+                            <TextBlock Text="!"
+                       Foreground="White"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+                        </Border>
+                    </StackPanel>
+                </ControlTemplate>
+
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

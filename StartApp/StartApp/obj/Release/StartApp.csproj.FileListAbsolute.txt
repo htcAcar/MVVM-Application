@@ -1,0 +1,8 @@
+C:\Users\USER\source\repos\StartApp\StartApp\obj\Release\StartApp.csprojAssemblyReference.cache
+C:\Users\USER\source\repos\StartApp\StartApp\obj\Release\LoginWindow.g.cs
+C:\Users\USER\source\repos\StartApp\StartApp\obj\Release\MainWindow.g.cs
+C:\Users\USER\source\repos\StartApp\StartApp\obj\Release\NewRecord.g.cs
+C:\Users\USER\source\repos\StartApp\StartApp\obj\Release\RegisterWindow.g.cs
+C:\Users\USER\source\repos\StartApp\StartApp\obj\Release\App.g.cs
+C:\Users\USER\source\repos\StartApp\StartApp\obj\Release\StartApp_MarkupCompile.cache
+C:\Users\USER\source\repos\StartApp\StartApp\obj\Release\StartApp_MarkupCompile.lref

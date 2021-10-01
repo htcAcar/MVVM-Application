@@ -1,0 +1,5 @@
+C:\Users\USER\source\repos\StartApp\StartApp.Entities\bin\Debug\StartApp.Entities.dll
+C:\Users\USER\source\repos\StartApp\StartApp.Entities\bin\Debug\StartApp.Entities.pdb
+C:\Users\USER\source\repos\StartApp\StartApp.Entities\obj\Debug\StartApp.Entities.csproj.CoreCompileInputs.cache
+C:\Users\USER\source\repos\StartApp\StartApp.Entities\obj\Debug\StartApp.Entities.dll
+C:\Users\USER\source\repos\StartApp\StartApp.Entities\obj\Debug\StartApp.Entities.pdb

@@ -1,0 +1,11 @@
+C:\Users\USER\source\repos\StartApp\StartApp.Business\bin\Debug\StartApp.Business.dll
+C:\Users\USER\source\repos\StartApp\StartApp.Business\bin\Debug\StartApp.Business.pdb
+C:\Users\USER\source\repos\StartApp\StartApp.Business\bin\Debug\StartApp.DataAccess.dll
+C:\Users\USER\source\repos\StartApp\StartApp.Business\bin\Debug\StartApp.Entities.dll
+C:\Users\USER\source\repos\StartApp\StartApp.Business\bin\Debug\StartApp.DataAccess.pdb
+C:\Users\USER\source\repos\StartApp\StartApp.Business\bin\Debug\StartApp.Entities.pdb
+C:\Users\USER\source\repos\StartApp\StartApp.Business\obj\Debug\StartApp.Business.csprojAssemblyReference.cache
+C:\Users\USER\source\repos\StartApp\StartApp.Business\obj\Debug\StartApp.Business.csproj.CoreCompileInputs.cache
+C:\Users\USER\source\repos\StartApp\StartApp.Business\obj\Debug\StartApp.Business.csproj.CopyComplete
+C:\Users\USER\source\repos\StartApp\StartApp.Business\obj\Debug\StartApp.Business.dll
+C:\Users\USER\source\repos\StartApp\StartApp.Business\obj\Debug\StartApp.Business.pdb
